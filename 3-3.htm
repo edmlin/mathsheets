@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<head>
+<meta charset='utf-8'/>
+<script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
+<style>
+	td
+    {
+        font-size:25pt;
+    }
+	table.page 
+    {
+        page-break-after: always;
+		border-collapse:collapse;
+		border:1px solid;
+    }
+</style>
+</head>
+<html>
+    <body>
+        <div id="container"></div>
+    </body>
+<script>
+    function random(min,max)
+    {
+        return Math.floor(Math.random()*(max-min+1)+min);
+    }
+    function equation()
+    {
+        var oper1,oper2,op;
+        
+        if(random(1,4)==1)
+        {
+            oper1=random(100,999);
+            op="+";
+            oper2=random(100,999);
+        }
+        else
+        {
+            op="−";
+            if(random(1,2)==1)
+            {
+                oper1=random(100,999);
+                oper2=random(10,oper1);
+            }
+            else
+            {
+                if(random(1,3)>1)
+                {
+                    oper2=random(10,899);
+                    oper1=random(Math.floor(oper2/100)+1,9)*100 + random(0,oper2%100);
+                }
+                else
+                {
+                    oper2=random(1,89)*10+random(1,9);
+                    oper1=random(Math.floor(oper2/100)+1,9)*100+random(0,oper2%10);
+                }
+            }
+        }
+        return {
+            oper1: oper1,
+            op: op,
+            oper2: oper2
+        };
+    }
+    function equationTable(eq)
+    {
+        var rowHeight=40;
+        var {oper1,op,oper2}=eq;
+        var table=$("<table width=70% align=center border=0 cellspacing=0 />").css("border-collapse","collapse");
+        var row1=$(`<tr height=${rowHeight}/>`).append(`<td/>`);
+        var row2=$(`<tr height=${rowHeight}/>`)
+        var length=`${oper1}`.length+1;
+        `${oper1}`.split("").forEach(function(c){
+            row1.append(`<td>${c}</td>`);
+        });
+        row2.append(`<td >${op}</td>`);
+        `${oper2}`.padStart(`${oper1}`.length).split("").forEach(function(c){
+            row2.append(`<td>${c}</td>`);
+        });
+        row2.css("border-bottom","solid 1px black");
+        table.append(row1).append(row2).append(`<tr height=${rowHeight}/>`);
+        return table;
+    }
+    $(function(){
+        var colsPerPage=6,rowsPerPage=6,pages=2;
+        for(var p=0;p<pages;p++)
+        {
+            var page=$("<table width=100% align=center border=1>").addClass("page");
+            for(var r=0;r<rowsPerPage;r++)
+            {
+                row=$("<tr/>").appendTo(page);
+                for(var c=0;c<colsPerPage;c++)
+                {
+                    col=$("<td height=130 valign=top />").append(equationTable(equation())).appendTo(row);
+                }
+            }
+            $("#container").append(page);
+        }
+    })
+ 
+</script>
+</html>

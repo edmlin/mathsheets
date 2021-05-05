@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<head>
+<meta charset='utf-8'/>
+<script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
+<style>
+	td
+    {
+        font-size:1.5em;
+    }
+	table.page 
+    {
+        page-break-after: always;
+		border-collapse:collapse;
+		border:1px solid;
+    }
+</style>
+</head>
+<html>
+    <body>
+        <div id="container"></div>
+    </body>
+<script>
+    function shuffle(array) {
+        var m = array.length, t, i;
+        // While there remain elements to shuffle…
+        while (m) {
+            // Pick a remaining element…
+            i = Math.floor(Math.random() * m--);
+            // And swap it with the current element.
+            t = array[m];
+            array[m] = array[i];
+            array[i] = t;
+        }
+        return array;
+    }
+    function* equationGenerator()
+    {
+        var equations=[];
+        for(var i=11;i<=89;i++)
+        {
+            for(var j=10-(i%10);j<=9;j++)
+            {
+                equations.push({oper1: i,oper2: j, op: "+"})
+                equations.push({oper1: i+j, oper2: j, op:"−"});
+            }
+        }
+        while(1)
+        {
+            shuffle(equations);
+            for(let index=0;index<equations.length;index++)
+            {
+                yield equations[index];
+            }
+        }
+    }
+    function random(min,max)
+    {
+        return Math.floor(Math.random()*(max-min+1)+min);
+    }
+    function equation()
+    {
+        if(typeof equation.generator=='undefined') equation.generator=equationGenerator();
+        return equation.generator.next().value;
+    }
+    function equationTable(eq)
+    {
+        var {oper1,op,oper2}=eq;
+        var table=$(`<span>${oper1} ${op} ${oper2} =</span>`);
+        return table;
+    }
+
+    $(function(){
+        var colsPerPage=5,rowsPerPage=19,pages=2;
+        for(var p=0;p<pages;p++)
+        {
+            var page=$("<table width=100% align=center border=1>").addClass("page");
+            for(var r=0;r<rowsPerPage;r++)
+            {
+                row=$("<tr/>").appendTo(page);
+                for(var c=0;c<colsPerPage;c++)
+                {
+                    col=$("<td height=40 valign=middle />").append(equationTable(equation())).appendTo(row);
+                }
+            }
+            $("#container").append(page);
+        }
+    })
+ 
+</script>
+</html>
