@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<head>
+<meta charset='utf-8'/>
+<script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
+<script src="utils.js"></script>
+<script src="equation.js"></script>
+<script src="2-1.js"></script>
+<script src="3-3.js"></script>
+<script src="3x1.js"></script>
+<style>
+	table.page 
+    {
+        page-break-after: always;
+		border-collapse:collapse;
+		border:1px solid;
+    }
+</style>
+<script>
+    function getSettings(defaults)
+    {
+        defaults={pageHeight: 840, ...defaults};
+        var {fontSize,pageHeight,colsPerPage,rowsPerPage,pages}=defaults;
+        var params=new URLSearchParams(window.location.search);
+        params.has("fontSize") && (fontSize=params.get("fontSize"));
+        params.has("colsPerPage") && (colsPerPage=params.get("colsPerPage"));
+        params.has("rowsPerPage") && (rowsPerPage=params.get("rowsPerPage"));
+        params.has("pages") && (pages=params.get("pages"));
+        params.has("pageHeight") && (pageHeight=params.get("pageHeight"));
+        return {
+            fontSize: fontSize,
+            pageHeight: pageHeight,
+            pageHeight: pageHeight,
+            colsPerPage: colsPerPage,
+            rowsPerPage: rowsPerPage,
+            pages: pages
+        };
+    }
+    $(function(){
+        var params=new URLSearchParams(window.location.search);
+        var equationClass;
+        var settings;
+        switch(params.get("sheetType")) {
+            case "2-1":
+                equationClass=Eq2_1;
+                settings=getSettings({
+                    fontSize: "16pt",
+                    colsPerPage: 6, 
+                    rowsPerPage: 19, 
+                    pages:2 
+                });
+                break;
+            case "3-3":
+                equationClass=Eq3_3;
+                settings=getSettings({
+                    fontSize: "25pt",
+                    colsPerPage: 6, 
+                    rowsPerPage: 6, 
+                    pages:2 
+                });
+                break;
+            case "3x1":
+                equationClass=Eq3x1;
+                settings=getSettings({
+                    fontSize: "25pt",
+                    colsPerPage: 6, 
+                    rowsPerPage: 6, 
+                    pages:2 
+                });
+                break;
+            default:
+                equationClass=Eq3x1;
+                settings=getSettings({
+                    fontSize: "25pt",
+                    colsPerPage: 6, 
+                    rowsPerPage: 6, 
+                    pages:2 
+                });
+                break;
+        }
+        var {fontSize,pageHeight,colsPerPage,rowsPerPage,pages}=settings;
+        var rowHeight=Math.floor(pageHeight/rowsPerPage);
+        $("body").css("font-size",fontSize);
+        for(var p=0;p<pages;p++)
+        {
+            var page=$("<table width=100% align=center border=1>").addClass("page");
+            for(var r=0;r<rowsPerPage;r++)
+            {
+                row=$("<tr/>").appendTo(page);
+                for(var c=0;c<colsPerPage;c++)
+                {
+                    col=$(`<td height=${rowHeight} valign=middle />`).append(equationClass.next().show(rowHeight)).appendTo(row);
+                }
+            }
+            $("#container").append(page);
+        }
+    });
+</script>
+</head>
+<html>
+    <body>
+        <div id="container"></div>
+    </body>
+</html>

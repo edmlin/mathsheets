@@ -1,11 +1,95 @@
-<ul>
-    <li>
-        <a href="2-1.htm">2-1.htm</a>
-    </li>
-    <li>
-        <a href="3-3.htm">3-3.htm</a>
-    </li>
-    <li>
-        <a href="3x1.htm">3x1.htm</a>
-    </li>
-</ul>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" rel="stylesheet"> 
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+    </head>
+    <body>
+        <div class="container">
+            <form action="mathsheets.htm" method="get">
+                <div class="form-group">
+                    <div class="form-check">
+                        <input class="form-check-input" type=radio value="2-1" name="sheetType" id="sheetType1"><label class="form-check-label" for="sheetType1">2-1</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type=radio value="3-3" name="sheetType" id="sheetType2"><label class="form-check-label" for="sheetType2">3-3</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type=radio value="3x1" name="sheetType" id="sheetType3"><label class="form-check-label" for="sheetType3">3x1</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    Font Size: <input class="form-control" name="fontSize" size="10">
+                    Page Height: <input class="form-control" name="pageHeight" size="10">
+                    Columns Per Page: <input class="form-control" name="colsPerPage" size="10">
+                    Rows Per Page: <input class="form-control" name="rowsPerPage" size="10">
+                </div>
+                <input type="submit">
+            </form>
+        </div>
+        <script>
+            var settings;
+            function setValues()
+            {
+                var selected=$("input[name='sheetType']:checked").val();
+                $("input[name=fontSize]").val(settings[selected].fontSize);
+                $("input[name=pageHeight]").val(settings[selected].pageHeight);
+                $("input[name=colsPerPage]").val(settings[selected].colsPerPage);
+                $("input[name=rowsPerPage]").val(settings[selected].rowsPerPage);
+            }
+            $(function(){
+                var defaults={
+                    selected: "2-1",
+                    "2-1":{
+                        fontSize: "16pt",
+                        pageHeight: 840,
+                        colsPerPage: 6,
+                        rowsPerPage: 19
+                    },
+                    "3-3":{
+                        fontSize: "25pt",
+                        pageHeight: 840,
+                        colsPerPage: 6,
+                        rowsPerPage: 6
+                    },
+                    "3x1":{
+                        fontSize: "25pt",
+                        pageHeight: 840,
+                        colsPerPage: 6,
+                        rowsPerPage: 6
+                    }
+                };
+                try
+                {
+                    settings=JSON.parse(localStorage.getItem("mathSheetsSettings"));
+                }
+                catch{
+                    settings=null;
+                }
+                if(!settings || !settings["2-1"]) {
+                    settings=defaults;
+                    localStorage.setItem("mathSheetsSettings",JSON.stringify(settings));
+                }
+               
+                $(`input[name=sheetType][value=${settings.selected}]`).prop("checked","checked");
+                setValues();
+                $("input[name='sheetType']").on("click",function(e){
+                    setValues();
+                });
+                $("form").on("submit",function(){
+                    var selected=$("input[name='sheetType']:checked").val();
+                    settings.selected=selected;
+                    settings[selected].fontSize=$("input[name=fontSize]").val();
+                    settings[selected].pageHeight=$("input[name=pageHeight]").val();
+                    settings[selected].colsPerPage=$("input[name=colsPerPage]").val();
+                    settings[selected].rowsPerPage=$("input[name=rowsPerPage]").val();
+                    localStorage.setItem("mathSheetsSettings",JSON.stringify(settings));
+                    return true;
+                });
+            })
+        </script>
+    </body>    
+</html>
