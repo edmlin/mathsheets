@@ -28,10 +28,11 @@
                     Rows Per Page: <input class="form-control" name="rowsPerPage" size="10">
                 </div>
                 <input type="submit">
+                <input type="button" value="Reset Defaults" id="reset">
             </form>
         </div>
         <script>
-            var settings;
+            var settings,defaults;
             function setValues()
             {
                 var selected=$("input[name='sheetType']:checked").val();
@@ -41,7 +42,7 @@
                 $("input[name=rowsPerPage]").val(settings[selected].rowsPerPage);
             }
             $(function(){
-                var defaults={
+                defaults={
                     selected: "2-1",
                     "2-1":{
                         fontSize: "16pt",
@@ -71,7 +72,6 @@
                 }
                 if(!settings || !settings["2-1"]) {
                     settings=defaults;
-                    localStorage.setItem("mathSheetsSettings",JSON.stringify(settings));
                 }
                
                 $(`input[name=sheetType][value=${settings.selected}]`).prop("checked","checked");
@@ -89,6 +89,11 @@
                     localStorage.setItem("mathSheetsSettings",JSON.stringify(settings));
                     return true;
                 });
+                $("#reset").click(function(){
+                    localStorage.removeItem("mathSheetsSettings");
+                    settings=defaults;
+                    setValues();
+                })
             })
         </script>
     </body>    
