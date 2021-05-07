@@ -4,12 +4,12 @@ class Eq3_3 extends Equation {
         if(random(1,4)==1)
         {
             oper1=random(100,999);
-            op="+";
+            op="&plus;";
             oper2=random(100,999);
         }
         else
         {
-            op="−";
+            op="&minus;";
             if(random(1,2)==1)
             {
                 oper1=random(100,999);

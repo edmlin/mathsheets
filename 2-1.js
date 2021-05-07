@@ -5,8 +5,8 @@ class Eq2_1 extends Equation {
         {
             for(var j=10-(i%10);j<=9;j++)
             {
-                equations.push(new Eq2_1(i, j, "+"));
-                equations.push(new Eq2_1(i+j, j, "−"));
+                equations.push(new Eq2_1(i, j, "&plus;"));
+                equations.push(new Eq2_1(i+j, j, "&minus;"));
             }
         }
         while(1)

@@ -5,7 +5,7 @@ class Eq3x1 extends Equation {
         {
             for(var j=2;j<10;j++)
             {
-                equations.push(new Eq3x1(i, j, "×"))
+                equations.push(new Eq3x1(i, j, "&times;"))
             }
         }
         while(1)
