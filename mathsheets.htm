@@ -4,6 +4,8 @@
 <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
 <script src="utils.js"></script>
 <script src="equation.js"></script>
+<script src="1x1.js"></script>
+<script src="2d1.js"></script>
 <script src="2-1.js"></script>
 <script src="3-3.js"></script>
 <script src="3x1.js"></script>
@@ -42,6 +44,24 @@
         switch(params.get("sheetType")) {
             case "2-1":
                 equationClass=Eq2_1;
+                settings=getSettings({
+                    fontSize: "16pt",
+                    colsPerPage: 6, 
+                    rowsPerPage: 19, 
+                    pages:2 
+                });
+                break;
+            case "1x1":
+                equationClass=Eq1x1;
+                settings=getSettings({
+                    fontSize: "16pt",
+                    colsPerPage: 6, 
+                    rowsPerPage: 19, 
+                    pages:2 
+                });
+                break;
+            case "2d1":
+                equationClass=Eq2d1;
                 settings=getSettings({
                     fontSize: "16pt",
                     colsPerPage: 6, 
