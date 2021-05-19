@@ -24,6 +24,9 @@
                         <input class="form-check-input" type=radio value="3x1" name="sheetType" id="sheetType3x1"><label class="form-check-label" for="sheetType3x1">3&times;1</label>
                     </div>
                     <div class="form-check">
+                        <input class="form-check-input" type=radio value="1x_" name="sheetType" id="sheetType1x_"><label class="form-check-label" for="sheetType1x_">1&times;__</label>
+                    </div>
+                    <div class="form-check">
                         <input class="form-check-input" type=radio value="2d1" name="sheetType" id="sheetType2d1"><label class="form-check-label" for="sheetType2d1">2&divide;1</label>
                     </div>
                 </div>
@@ -53,6 +56,13 @@
                 defaults={
                     selected: "2-1",
                     "1x1":{
+                        fontSize: "16pt",
+                        pageHeight: 840,
+                        colsPerPage: 6,
+                        rowsPerPage: 19,
+                        pages: 1
+                    },
+                    "1x_":{
                         fontSize: "16pt",
                         pageHeight: 840,
                         colsPerPage: 6,

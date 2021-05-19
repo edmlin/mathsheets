@@ -20,7 +20,7 @@ class Eq2_1 extends Equation {
     }
     static generator=Eq2_1.equationGenerator();
     static next() {
-        return this.generator.next().value;
+        return Eq2_1.generator.next().value;
     }
     show() {
         return this.getLine();

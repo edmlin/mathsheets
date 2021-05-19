@@ -1,11 +1,11 @@
-class Eq1x1 extends Equation {
+class Eq1x_ extends Equation {
     static *equationGenerator() {
         var equations=[];
         for(var i=2;i<=9;i++)
         {
             for(var j=2;j<=9;j++)
             {
-                equations.push(new Eq1x1(i, j, "&times;"));
+                equations.push(new Eq1x_(i, j, "&times;"));
             }
         }
         while(1)
@@ -17,12 +17,14 @@ class Eq1x1 extends Equation {
             }
         }
     }
-    static generator=Eq1x1.equationGenerator();
+    static generator=Eq1x_.equationGenerator();
     static next() {
-        return Eq1x1.generator.next().value;
+        return Eq1x_.generator.next().value;
     }
     show() {
-        return this.getLine();
+        var [oper1,oper2,op]=[this.oper1,this.oper2,this.op];
+        var line=$(`<span>${oper1} ${op} __ = ${oper1*oper2}</span>`);
+        return line;
     }
 
 }
