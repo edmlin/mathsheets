@@ -46,6 +46,9 @@
             function setValues()
             {
                 var selected=$("input[name='sheetType']:checked").val();
+                if(settings[selected]==undefined) {
+                    selected="default";
+                }
                 $("input[name=fontSize]").val(settings[selected].fontSize);
                 $("input[name=pageHeight]").val(settings[selected].pageHeight);
                 $("input[name=colsPerPage]").val(settings[selected].colsPerPage);
@@ -96,6 +99,13 @@
                         colsPerPage: 6,
                         rowsPerPage: 6,
                         pages: 1
+                    },
+                    "default":{
+                        fontSize: "25pt",
+                        pageHeight: 840,
+                        colsPerPage: 6,
+                        rowsPerPage: 6,
+                        pages: 1
                     }
                 };
                 try
@@ -108,7 +118,7 @@
                 if(!settings || !settings["2-1"]) {
                     settings=defaults;
                 }
-               
+                settings={...defaults, ...settings};
                 $(`input[name=sheetType][value=${settings.selected}]`).prop("checked","checked");
                 setValues();
                 $("input[name='sheetType']").on("click",function(e){
