@@ -17,32 +17,38 @@
 		border-collapse:collapse;
 		border:1px solid;
     }
+	
     html, body
+	{
+		margin-left: 0;
+		margin-right: 0;
+		height:100%;
+		width: 100%;
+	}
+</style>
+<style type="text/css" media="print">
+    @page
     {
         margin-left: 0;
         margin-right: 0;
-    }
-    @page
-    {
-        margin-left: 15mm;
-        margin-right: 15mm;
     }
 </style>
 <script>
     function getSettings(defaults)
     {
-        defaults={pageHeight: 840, ...defaults};
-        var {fontSize,pageHeight,colsPerPage,rowsPerPage,pages}=defaults;
+        defaults={pageHeight: 40, pageWidth: 18, ...defaults};
+        var {fontSize,pageHeight,pageWidth,colsPerPage,rowsPerPage,pages}=defaults;
         var params=new URLSearchParams(window.location.search);
         params.has("fontSize") && (fontSize=params.get("fontSize"));
         params.has("colsPerPage") && (colsPerPage=params.get("colsPerPage"));
         params.has("rowsPerPage") && (rowsPerPage=params.get("rowsPerPage"));
         params.has("pages") && (pages=params.get("pages"));
         params.has("pageHeight") && (pageHeight=params.get("pageHeight"));
+		params.has("pageWidth") && (pageWidth=params.get("pageWidth"));
         return {
             fontSize: fontSize,
             pageHeight: pageHeight,
-            pageHeight: pageHeight,
+            pageWidth: pageWidth,
             colsPerPage: colsPerPage,
             rowsPerPage: rowsPerPage,
             pages: pages
@@ -117,22 +123,24 @@
                 });
                 break;
         }
-        var {fontSize,pageHeight,colsPerPage,rowsPerPage,pages}=settings;
-        var rowHeight=Math.floor(pageHeight/rowsPerPage);
+        var {fontSize,pageHeight,pageWidth,colsPerPage,rowsPerPage,pages}=settings;
         $("body").css("font-size",fontSize);
         for(var p=0;p<pages;p++)
         {
-            var page=$("<table width=100% align=center border=1>").addClass("page");
+            var page=$("<table align=center border=1>").addClass("page");
             for(var r=0;r<rowsPerPage;r++)
             {
                 row=$("<tr/>").appendTo(page);
                 for(var c=0;c<colsPerPage;c++)
                 {
-                    col=$(`<td height=${rowHeight} valign=middle />`).append(equationClass.next().show(rowHeight)).appendTo(row);
+                    col=$(`<td valign=middle />`).append(equationClass.next().show(rowHeight)).appendTo(row);
                 }
             }
             $("#container").append(page);
         }
+		$("table.page").css("width", pageWidth+"cm");
+		$("table.page").css("height", pageHeight+"cm");
+		$("<style media='print'>table.page{height:"+pageHeight+"cm;width:"+pageWidth+"cm;}</style>").appendTo($("head"));
     });
 </script>
 </head>

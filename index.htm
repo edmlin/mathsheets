@@ -32,7 +32,8 @@
                 </div>
                 <div class="form-group">
                     Font Size: <input class="form-control" name="fontSize" size="10">
-                    Page Height: <input class="form-control" name="pageHeight" size="10">
+                    Page Height(cm): <input class="form-control" name="pageHeight" size="10">
+					Page Width(cm): <input class="form-control" name="pageWidth" size="10">
                     Columns Per Page: <input class="form-control" name="colsPerPage" size="10">
                     Rows Per Page: <input class="form-control" name="rowsPerPage" size="10">
                     Pages: <input class="form-control" name="pages" size="10">
@@ -51,6 +52,7 @@
                 }
                 $("input[name=fontSize]").val(settings[selected].fontSize);
                 $("input[name=pageHeight]").val(settings[selected].pageHeight);
+				$("input[name=pageWidth]").val(settings[selected].pageWidth);
                 $("input[name=colsPerPage]").val(settings[selected].colsPerPage);
                 $("input[name=rowsPerPage]").val(settings[selected].rowsPerPage);
                 $("input[name=pages]").val(settings[selected].pages);
@@ -60,49 +62,56 @@
                     selected: "2-1",
                     "1x1":{
                         fontSize: "16pt",
-                        pageHeight: 840,
+                        pageHeight: 40,
+						pageWidth: 18,
                         colsPerPage: 6,
                         rowsPerPage: 19,
                         pages: 1
                     },
                     "1x_":{
                         fontSize: "16pt",
-                        pageHeight: 840,
+                        pageHeight: 40,
+						pageWidth: 18,
                         colsPerPage: 6,
                         rowsPerPage: 19,
                         pages: 1
                     },
                     "2d1":{
                         fontSize: "16pt",
-                        pageHeight: 840,
+                        pageHeight: 40,
+						pageWidth: 18,
                         colsPerPage: 6,
                         rowsPerPage: 19,
                         pages: 1
                     },
                     "2-1":{
                         fontSize: "16pt",
-                        pageHeight: 840,
+                        pageHeight: 40,
+						pageWidth: 18,
                         colsPerPage: 6,
                         rowsPerPage: 19,
                         pages: 1
                     },
                     "3-3":{
                         fontSize: "25pt",
-                        pageHeight: 840,
+                        pageHeight: 40,
+						pageWidth: 18,
                         colsPerPage: 6,
                         rowsPerPage: 6,
                         pages: 1
                     },
                     "3x1":{
                         fontSize: "25pt",
-                        pageHeight: 840,
+                        pageHeight: 40,
+						pageWidth: 18,
                         colsPerPage: 6,
                         rowsPerPage: 6,
                         pages: 1
                     },
                     "default":{
                         fontSize: "25pt",
-                        pageHeight: 840,
+                        pageHeight: 40,
+						pageWidth: 18,
                         colsPerPage: 6,
                         rowsPerPage: 6,
                         pages: 1
@@ -118,6 +127,13 @@
                 if(!settings || !settings["2-1"]) {
                     settings=defaults;
                 }
+				for(let t in settings)
+				{
+					if(typeof defaults[t] == "object" && typeof settings[t] == "object")
+					{
+						settings[t]={...defaults[t],...settings[t]};
+					}
+				}
                 settings={...defaults, ...settings};
                 $(`input[name=sheetType][value=${settings.selected}]`).prop("checked","checked");
                 setValues();
@@ -129,6 +145,7 @@
                     settings.selected=selected;
                     settings[selected].fontSize=$("input[name=fontSize]").val();
                     settings[selected].pageHeight=$("input[name=pageHeight]").val();
+					settings[selected].pageWidth=$("input[name=pageWidth]").val();
                     settings[selected].colsPerPage=$("input[name=colsPerPage]").val();
                     settings[selected].rowsPerPage=$("input[name=rowsPerPage]").val();
                     settings[selected].pages=$("input[name=pages]").val();
