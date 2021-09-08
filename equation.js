@@ -6,14 +6,12 @@ class Equation {
     {
         [this.oper1,this.oper2,this.op]=[oper1,oper2,op];
     }
-    getTable(height)
+    getTable()
     {
-        if(height==undefined) height=120;
-        var rowHeight=Math.floor(height/3);
         var [oper1,oper2,op]=[this.oper1,this.oper2,this.op];
-        var table=$("<table width=70% align=center border=0 cellspacing=0 />").css("border-collapse","collapse");
-        var row1=$(`<tr height=${rowHeight}/>`).append(`<td/>`);
-        var row2=$(`<tr height=${rowHeight}/>`)
+        var table=$("<table width=70% height=100% align=center border=0 cellspacing=0 />").css("border-collapse","collapse");
+        var row1=$(`<tr style='height:33%'/>`).append(`<td/>`);
+        var row2=$(`<tr style='height:33%'/>`)
         var length=`${oper1}`.length+1;
         `${oper1}`.split("").forEach(function(c){
             row1.append(`<td>${c}</td>`);
@@ -23,7 +21,7 @@ class Equation {
             row2.append(`<td>${c}</td>`);
         });
         row2.css("border-bottom","solid 1px black");
-        table.append(row1).append(row2).append(`<tr height=${rowHeight}/>`);
+        table.append(row1).append(row2).append(`<tr style='height:33%'/>`);
         return table;
     }
     getLine()

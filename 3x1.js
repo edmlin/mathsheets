@@ -21,7 +21,7 @@ class Eq3x1 extends Equation {
     static next() {
         return Eq3x1.generator.next().value;
     }
-    show(height) {
-        return this.getTable(height);
+    show() {
+        return this.getTable();
     }
 }

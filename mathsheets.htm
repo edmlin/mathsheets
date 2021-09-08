@@ -133,7 +133,7 @@
                 row=$("<tr/>").appendTo(page);
                 for(var c=0;c<colsPerPage;c++)
                 {
-                    col=$(`<td valign=middle />`).append(equationClass.next().show(pageHeight/rowsPerPage)).appendTo(row);
+                    col=$(`<td valign=middle />`).append(equationClass.next().show()).appendTo(row);
                 }
             }
             $("#container").append(page);
