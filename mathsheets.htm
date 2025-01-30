@@ -10,6 +10,7 @@
 <script src="3-3.js"></script>
 <script src="3x1.js"></script>
 <script src="1x_.js"></script>
+<script src="longdiv.js"></script>
 <style>
 	table.page 
     {
@@ -106,6 +107,15 @@
                 break;
             case "3x1":
                 equationClass=Eq3x1;
+                settings=getSettings({
+                    fontSize: "25pt",
+                    colsPerPage: 6, 
+                    rowsPerPage: 6, 
+                    pages:1 
+                });
+                break;
+            case "longDiv":
+                equationClass=longDiv;
                 settings=getSettings({
                     fontSize: "25pt",
                     colsPerPage: 6, 
